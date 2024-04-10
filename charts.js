@@ -1,5 +1,6 @@
  
  window.addEventListener('load', (e)=>{
+  console.log('CUSTOM SCRIPT LOADED')
  // range sliders const
 	const spend_extent = [1000, 10000];
   const account_extent = [20, 2000];
