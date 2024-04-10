@@ -138,8 +138,14 @@
     const fluency_circle = 
     	lines
         .append('circle')
-        .attr("r", 16)
+        .attr("r", 12)
         .attr("fill", "#785D80")
+
+    const future_circle = 
+      lines
+        .append('circle')
+        .attr("r", 12)
+        .attr("fill", "#f19a5f")
       
     lines
       .append("path")
@@ -216,9 +222,14 @@
         .attr("font-weight", "bold")
         .attr("x", 24)
         .attr("style", `transform:rotate(-8deg)`);
+
+      // labels
+
+      
      
-     ///////////////
-     /// bar chart
+     /////////////////
+     /// bar chart ///
+     ////////////////
       d3.select("#calc_chart_bar svg").remove();
       const bar_chart = d3
    		  .select('#calc_chart_bar')
@@ -260,7 +271,7 @@
        
       const future_bar = bars
        .append("rect")
-       .attr('x', width-marginRight -48 - 16) 
+       .attr('x', width-marginRight -48-16) 
        .attr('width', 48)
        .style('fill', "url(#future_bar_gradient)");
        
@@ -276,6 +287,10 @@
       const position = (x, d, l) => {
         movables.attr("style", `transform:translateX(${x}px)`);
      		fluency_circle
+        	.attr('cx', x)
+          .attr('cy', y(d.fluency_monthly))
+
+        future_circle
         	.attr('cx', x)
           .attr('cy', y(d.future_monthly))
         
