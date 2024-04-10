@@ -1,7 +1,4 @@
- 
- window.addEventListener('load', (e)=>{
-  console.log('CUSTOM SCRIPT LOADED')
- // range sliders const
+  // range sliders const
 	const spend_extent = [1000, 10000];
   const account_extent = [20, 2000];
   const salary_extent = [75000, 150000];
@@ -56,7 +53,7 @@
     });
   }
    // move them sliders
-	
+	window.addEventListener('load', (e)=>{
     const tcr = document.querySelector("#team_size_range");
     const tco = document.querySelector("#team_size_output");
     tcr.setAttribute("min", team_extent[0]);
@@ -89,8 +86,9 @@
     asr.value = range_data.account_spend;
 		range_update(asr, aso, "account_spend");
  
-
+   }); 
  
+
   const get_color = (v) => getComputedStyle(document.documentElement).getPropertyValue(v);
 	let old_growth = 2;
   
@@ -106,8 +104,7 @@
   const rate_scale = d3.scaleSequentialPow().domain(spend_extent).range([0.025, 0.01]).exponent(2);
   const growth_stops = [...Array(31).keys()].map((n) => (n + 10) / 10).slice(5);  // 1.5 - 4 by .1 steps
   
-  // global, friggin webflow
-  update_chart = () => {
+  const update_chart = () => {
   	let chart_data = growth_stops.map(growth => {
       let current_labor_cost = (range_data.team_salary / 12) * range_data.team_size;
 
@@ -415,4 +412,3 @@
          })
        });
     }
-  }); 
