@@ -1,4 +1,6 @@
-  // range sliders const
+ 
+ window.addEventListener('load', (e)=>{
+ // range sliders const
 	const spend_extent = [1000, 10000];
   const account_extent = [20, 2000];
   const salary_extent = [75000, 150000];
@@ -53,7 +55,7 @@
     });
   }
    // move them sliders
-	window.addEventListener('load', (e)=>{
+	
     const tcr = document.querySelector("#team_size_range");
     const tco = document.querySelector("#team_size_output");
     tcr.setAttribute("min", team_extent[0]);
@@ -86,9 +88,8 @@
     asr.value = range_data.account_spend;
 		range_update(asr, aso, "account_spend");
  
-   }); 
- 
 
+ 
   const get_color = (v) => getComputedStyle(document.documentElement).getPropertyValue(v);
 	let old_growth = 2;
   
@@ -413,3 +414,4 @@
          })
        });
     }
+  }); 
