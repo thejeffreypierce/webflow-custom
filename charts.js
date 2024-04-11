@@ -4,8 +4,8 @@ const account_extent = [20, 2000];
 const salary_extent = [75000, 150000];
 const team_extent = [10, 250];
 // chart const
-const width = 64*7;
-const height = 64*6;
+const width = 64 * 7;
+const height = 64 * 6;
 const marginTop = 64;
 const marginRight = 32;
 const marginBottom = 96;
@@ -212,16 +212,42 @@ const update_chart = () => {
   const fluency_circle =
     line_chart
       .append('circle')
-      .attr("r", 8)
+      .attr("r", 12)
       .attr("fill", "#785D80")
 
   const future_circle =
     line_chart
       .append('circle')
-      .attr("r", 8)
+      .attr("r", 12)
       .attr("fill", "#f19a5f")
 
   // labels
+  const line_labels = line_chart
+    .append('g')
+    .attr("id", "monthly_labels")
+    .attr("style", `transform:translate(${marginLeft}px, ${height-marginBottom + 16})`);
+
+  line_labels
+    .append('circle')
+    .attr("r", 12)
+    .attr("fill", "#f19a5f")
+    .attr("cx", 0)
+    .attr("cy", -10)
+
+  const future_monthly_label = line_labels
+    .append('text')
+    .attr("fill", "#FFFFFF")
+    .attr("font-size", 14)
+    .attr("x", 20)
+    .text("Monthly Spend")
+
+  line_labels
+    .append('text')
+    .attr("fill", "#FFFFFF")
+    .attr("font-size", 10)
+    .attr("y", 20).text('Estimated savings based on increased capacity, takes into account the average cost of Fluency')
+
+
 
 
 
@@ -337,7 +363,7 @@ const update_chart = () => {
 };
 
 let range_data = {
-  team_size: 20,
+  team_size: 60,
   team_salary: 95000,
   account_count: 600,
   account_spend: 5000,
