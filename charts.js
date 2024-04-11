@@ -1,7 +1,7 @@
-const future_asl =""
-const fluency_asl =""
-const future_sl =""
-const fluency_sl=""
+const future_asl = ""
+const fluency_asl = ""
+const future_sl = ""
+const fluency_sl = ""
 
 // range sliders const
 const spend_extent = [1000, 10000];
@@ -206,13 +206,6 @@ const update_chart = () => {
     .attr("d", area(chart_data));
 
   // savings
-  const savings_txt = movables
-    .append("text")
-    .attr("fill", "#FFFFFF")
-    .attr("font-size", 36)
-    .attr("font-weight", "bold")
-    .attr("x", 24)
-    .attr("style", `transform:rotate(-8deg)`);
 
   const fluency_circle =
     line_chart
@@ -225,6 +218,31 @@ const update_chart = () => {
       .append('circle')
       .attr("r", 12)
       .attr("fill", "#f19a5f")
+
+  const savings_movable = line_chart
+    .append("g")
+    .attr("id", "savings_movable")
+    .attr("style", `transform:rotate(-8deg)`)
+
+  const savings_txt = savings_movable
+    .append("text")
+    .attr("stroke", "var(--violet)")
+    .attr("stroke-weight", "2")
+    .attr("fill", "#000")
+    .attr("font-size", 36)
+    .attr("font-weight", "bold")
+    .attr("x", width - marginRight - 16)
+    .attr("text-anchor", "end")
+
+  savings_movable
+    .append("text")
+    .attr("fill", "#FFF")
+    .attr("font-size", 14)
+    .attr("font-family", "Leaguemono")
+    .attr("text-anchor", "end")
+    .text("SAVING PER MONTH")
+    .attr("x", width - marginRight - 16)
+
 
   // labels
   // const line_labels = line_chart
@@ -273,10 +291,6 @@ const update_chart = () => {
   //   .attr("font-size", 10)
   //   .attr("y", 20)
   //   .text('with Fluency')
-
-
-
-
 
   /////////////////
   /// bar chart ///
@@ -346,14 +360,15 @@ const update_chart = () => {
 
     growth_txt.text(`${d.growth}x`);
 
-    savings_txt
-      .text(d3.format("$.2s")(d.savings_per_month))
-      .attr('y', (l ? 100 : 50) + y(d.future_monthly))
-      .attr("text-anchor", l ? "end" : "start")
-      .attr("x", l ? -36 : 24)
-      .attr("fill", l ? "#000000" : "#FFFFFF")
+    savings_movable.attr('y', 50 + y(d.future_monthly))
+    savings_txt.text(d3.format("$.2s")(d.savings_per_month))
+
+
+
     acct_savings_txt.text(d3.format("$.2s")(d.savings_per_account))
+
     clipper.attr("width", x - marginLeft);
+
     flue_bar
       .attr('y', barScale(d.fluency_per_account))
       .attr('height', barScale(0) - barScale(d.fluency_per_account))
