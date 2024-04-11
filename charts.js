@@ -250,47 +250,6 @@ const update_chart = () => {
   //   .attr("id", "monthly_labels")
   //   .attr("style", `transform:translate(${marginLeft}px, ${height-marginBottom + 16}px)`);
 
-  // line_labels
-  //   .append('circle')
-  //   .attr("r", 12)
-  //   .attr("fill", "#f19a5f")
-  //   .attr("cx", 0)
-  //   .attr("cy", 0)
-
-  // line_labels
-  //   .append('circle')
-  //   .attr("r", 12)
-  //   .attr("fill", "#f19a5f")
-  //   .attr("cx", 0)
-  //   .attr("cy", 48)
-
-  // const future_monthly_label = line_labels
-  //   .append('text')
-  //   .attr("fill", "#FFFFFF")
-  //   .attr("font-size", 14)
-  //   .attr("x", 20)
-  //   .text("Monthly Spend")
-
-  // const fluency_monthly_label = line_labels
-  //   .append('text')
-  //   .attr("fill", "#FFFFFF")
-  //   .attr("font-size", 14)
-  //   .attr("x", 20)
-  //   .text("Monthly Spend")
-
-  // line_labels
-  //   .append('text')
-  //   .attr("fill", "#FFFFFF")
-  //   .attr("font-size", 10)
-  //   .attr("y", 20)
-  //   .text('without Fluency')
-
-  // line_labels
-  //   .append('text')
-  //   .attr("fill", "#FFFFFF")
-  //   .attr("font-size", 10)
-  //   .attr("y", 20)
-  //   .text('with Fluency')
 
   /////////////////
   /// bar chart ///
@@ -378,10 +337,10 @@ const update_chart = () => {
       .attr('height', barScale(0) - barScale(d.future_per_account))
 
     // HTML labels
-    future_asl.innerHTML = d3.format("$.2f")(d.future_per_account)
-    fluency_asl.innerHTML = d3.format("$.2f")(d.fluency_per_account)
-    future_sl.innerHTML = d3.format("$.2f")(d.fluency_monthly)
-    fluency_sl.innerHTML = d3.format("$.2f")(d.fluency_monthly)
+    future_asl.innerHTML = d3.format("$.2s")(d.future_per_account)
+    fluency_asl.innerHTML = d3.format("$.2s")(d.fluency_per_account)
+    future_sl.innerHTML = d3.format("$.2s")(d.future_monthly)
+    fluency_sl.innerHTML = d3.format("$.2s")(d.fluency_monthly)
 
   }
 
