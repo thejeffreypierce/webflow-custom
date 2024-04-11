@@ -1,3 +1,8 @@
+const future_asl =""
+const fluency_asl =""
+const future_sl =""
+const fluency_sl=""
+
 // range sliders const
 const spend_extent = [1000, 10000];
 const account_extent = [20, 2000];
@@ -340,7 +345,7 @@ const update_chart = () => {
       .attr('cy', y(d.future_monthly))
 
     growth_txt.text(`${d.growth}x`);
-  
+
     savings_txt
       .text(d3.format("$.2s")(d.savings_per_month))
       .attr('y', (l ? 100 : 50) + y(d.future_monthly))
@@ -357,11 +362,11 @@ const update_chart = () => {
       .attr('y', barScale(d.future_per_account))
       .attr('height', barScale(0) - barScale(d.future_per_account))
 
-      // HTML labels
-      future_asl.innerHTML = d3.format("$.2f")(d.future_per_account)
-      fluency_asl.innerHTML = d3.format("$.2f")(d.fluency_per_account) 
-      future_sl.innerHTML = d3.format("$.2f")(d.fluency_monthly)
-      fluency_sl.innerHTML = d3.format("$.2f")(d.fluency_monthly)
+    // HTML labels
+    future_asl.innerHTML = d3.format("$.2f")(d.future_per_account)
+    fluency_asl.innerHTML = d3.format("$.2f")(d.fluency_per_account)
+    future_sl.innerHTML = d3.format("$.2f")(d.fluency_monthly)
+    fluency_sl.innerHTML = d3.format("$.2f")(d.fluency_monthly)
 
   }
 
@@ -474,10 +479,10 @@ window.addEventListener('load', (e) => {
   range_update(asr, aso, "account_spend");
 
   // label dom elements
-  const future_asl = document.querySelector("#future_account_spend_label");
-  const fluency_asl = document.querySelector("#fluency_account_spend_label");
-  const future_sl = document.querySelector("#future_spend_label");
-  const fluency_sl = document.querySelector("#fluency_spend_label");
+  future_asl = document.querySelector("#future_account_spend_label");
+  fluency_asl = document.querySelector("#fluency_account_spend_label");
+  future_sl = document.querySelector("#future_spend_label");
+  fluency_sl = document.querySelector("#fluency_spend_label");
 });
 
 
