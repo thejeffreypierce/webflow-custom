@@ -4,9 +4,8 @@ const account_extent = [20, 2000];
 const salary_extent = [75000, 150000];
 const team_extent = [10, 250];
 // chart const
-const width = 400;
-const height = 400;
-const barWidth = 400;
+const width = 64*7;
+const height = 64*6;
 const marginTop = 64;
 const marginRight = 32;
 const marginBottom = 96;
@@ -133,7 +132,7 @@ const update_chart = () => {
     .append("g")
     .attr("id", "moveables")
 
- movables
+  movables
     .attr("id", "growth_line")
     .append("line")
     .attr("stroke", "var(--light-grey)")
@@ -143,7 +142,7 @@ const update_chart = () => {
     .attr("x2", 0)
     .attr("y1", marginTop)
     .attr("y2", height - marginBottom + 10)
- 
+
   movables
     .append("circle")
     .attr("r", 24)
@@ -213,13 +212,13 @@ const update_chart = () => {
   const fluency_circle =
     line_chart
       .append('circle')
-      .attr("r", 12)
+      .attr("r", 8)
       .attr("fill", "#785D80")
 
   const future_circle =
     line_chart
       .append('circle')
-      .attr("r", 12)
+      .attr("r", 8)
       .attr("fill", "#f19a5f")
 
   // labels
@@ -233,8 +232,8 @@ const update_chart = () => {
   const bar_chart = d3
     .select('#calc_chart_bar')
     .append("svg")
-    .attr("width", barWidth)
-    .attr("viewBox", [0, 0, barWidth, height])
+    .attr("width", width)
+    .attr("viewBox", [0, 0, width, height])
     .attr(
       "style",
       "max-width: 100%; height: auto;"
@@ -288,7 +287,6 @@ const update_chart = () => {
     fluency_circle
       .attr('cx', x)
       .attr('cy', y(d.fluency_monthly))
-
     future_circle
       .attr('cx', x)
       .attr('cy', y(d.future_monthly))
