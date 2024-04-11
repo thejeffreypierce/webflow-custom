@@ -1,7 +1,7 @@
-const future_asl = ""
-const fluency_asl = ""
-const future_sl = ""
-const fluency_sl = ""
+let future_asl = ""
+let fluency_asl = ""
+let future_sl = ""
+let fluency_sl = ""
 
 // range sliders const
 const spend_extent = [1000, 10000];
