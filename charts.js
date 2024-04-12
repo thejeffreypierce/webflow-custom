@@ -174,7 +174,7 @@ const update_chart = () => {
     .attr("font-family", "Leaguemono")
     .attr("x", 0)
     .attr("text-anchor", "middle")
-    .attr("y", 36 + 36 + 8)
+    .attr("y", 36 + 36)
     .text("GROWTH")
 
   movables
@@ -357,19 +357,14 @@ const update_chart = () => {
     .attr("y", 24)
     .attr("style", `transform:rotate(4deg)`)
 
-  bar_chart
+  const account_count_txt = bar_chart
     .append("text")
     .attr("fill", "#FFF")
     .attr("font-size", 14)
     .attr("font-family", "Leaguemono")
-    .attr("text-anchor", "start")
-    .text("ACCOUNTS (2.5x GROWTH)")
-    .attr("y", 14)
+    .attr("text-anchor", "center")
+    .attr("y", width/2)
 
-  const account_count_txt = bar_chart
-    .append("text")
-    .attr("fill", "#FFF")
-    .attr("font-size", 20)
 
   const position = (x, d) => {
     movables.attr("style", `transform:translateX(${x}px)`);
@@ -386,9 +381,9 @@ const update_chart = () => {
 
     savings_txt.text(d3.format("$.2s")(d.savings_per_month))
 
-    account_savings_movable.attr("style", `transform:translateY(${128 + barScale(d.fluency_per_account)}px)`);
+    account_savings_movable.attr("style", `transform:translateY(${barScale(d.fluency_per_account) - 128}px)`);
     acct_savings_txt.text(d3.format("$.2s")(d.savings_per_account))
-
+    account_count_txt.text(`${d.future_accounts} ACCOUNTS (${d.growth}x GROWTH)`)
     clipper.attr("width", x - marginLeft + 8);
 
     flue_bar
@@ -526,7 +521,7 @@ window.addEventListener('load', (e) => {
 
 
 const get_color = (v) => getComputedStyle(document.documentElement).getPropertyValue(v);
-let old_growth = 2;
+let old_growth = 2.5;
 
 
 
