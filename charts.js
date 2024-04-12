@@ -400,8 +400,8 @@ const update_chart = () => {
     // HTML labels
     future_asl.innerHTML = d3.format("$.2f")(d.future_per_account)
     fluency_asl.innerHTML = d3.format("$.2f")(d.fluency_per_account)
-    future_sl.innerHTML = d3.format("$.2f")(d.future_monthly)
-    fluency_sl.innerHTML = d3.format("$.2f")(d.fluency_monthly)
+    future_sl.innerHTML = d3.format("$.2s")(d.future_monthly)
+    fluency_sl.innerHTML = d3.format("$.2s")(d.fluency_monthly)
 
   }
 
