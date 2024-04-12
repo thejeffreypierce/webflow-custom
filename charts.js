@@ -399,10 +399,10 @@ const update_chart = () => {
       .attr('height', barScale(0) - barScale(d.future_per_account))
 
     // HTML labels
-    future_asl.innerHTML = d3.format("$.2s")(d.future_per_account)
-    fluency_asl.innerHTML = d3.format("$.2s")(d.fluency_per_account)
-    future_sl.innerHTML = d3.format("$.2s")(d.future_monthly)
-    fluency_sl.innerHTML = d3.format("$.2s")(d.fluency_monthly)
+    future_asl.innerHTML = d3.format("$.2f")(d.future_per_account)
+    fluency_asl.innerHTML = d3.format("$.2f")(d.fluency_per_account)
+    future_sl.innerHTML = d3.format("$.2f")(d.future_monthly)
+    fluency_sl.innerHTML = d3.format("$.2f")(d.fluency_monthly)
 
   }
 
