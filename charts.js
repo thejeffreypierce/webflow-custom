@@ -19,7 +19,7 @@ const marginLeft = 64;
 let old_growth = 2.5;
 
 const get_color = (v) => getComputedStyle(document.documentElement).getPropertyValue(v);
-const rate_scale = d3.scaleSequentialPow().domain(spend_extent).range([0.025, 0.01]);
+const rate_scale = d3.scaleLinear(spend_extent, [0.025, 0.01]);
 const growth_stops = [...Array(31).keys()].map((n) => (n + 10) / 10).slice(5);  // 1.5 - 4 by .1 steps
 
 const update_chart = () => {
@@ -407,16 +407,14 @@ const update_chart = () => {
   }
 
   const X = x(old_growth);
-  const isCursorOnRight = X > width / 2;
   const current_data = chart_data.find(d => old_growth == d.growth);
-  position(X, current_data, isCursorOnRight);
+  position(X, current_data, X > width / 2);
 
   line_chart.on("pointerdown", (e) => {
     line_chart.on("pointermove", (e) => {
       let parent = document.querySelector('#calc_chart');
-      let parent_width = parent.offsetWidth;
       let bounds = parent.getBoundingClientRect();
-      const { pageX, clientX } = e;
+      const { clientX } = e;
       const X = clientX - bounds.left;
       const isCursorOnRight = X > width / 2;
       let current_growth = xrev(X).toFixed(1)
@@ -452,7 +450,7 @@ const format = (v, i) => {
   return val
 }
 
-const range_update = (r, o, i) => {
+const range_update = (r, o, i, a = false) => {
   let val = r.value
   let min = r.getAttribute('min');
   let max = r.getAttribute('max')
@@ -464,11 +462,15 @@ const range_update = (r, o, i) => {
   r.style.setProperty("--stop-2", `${progress * 0.895}%`);
   r.style.setProperty("--stop-3", `${progress}%`);
 
+  if(a) {
+    a.setAttribute("max", val * 3);
+  }
+
   update_chart();
 }
 
 // browsers can be weird
-const range_change = (r, o, i) => {
+const range_change = (r, o, i, ) => {
   let n, c, m;
   r.addEventListener("input", (e) => {
     n = 1;
@@ -492,39 +494,39 @@ window.addEventListener('load', (e) => {
   const tco = document.querySelector("#team_size_output");
   tcr.setAttribute("min", team_extent[0]);
   tcr.setAttribute("max", team_extent[1]);
-  range_change(tcr, tco, "team_size");
-  tcr.value = range_data.team_size;
-  range_update(tcr, tco, "team_size");
 
+  tcr.value = range_data.team_size;
+  
   const tsr = document.querySelector("#team_salary_range");
   const tso = document.querySelector("#team_salary_output");
   tsr.setAttribute("min", salary_extent[0]);
   tsr.setAttribute("max", salary_extent[1]);
-  range_change(tsr, tso, "team_salary");
+  
   tsr.value = range_data.team_salary;
-  range_update(tsr, tso, "team_salary");
-
+  
   const acr = document.querySelector("#account_count_range");
   const aco = document.querySelector("#account_count_output");
   acr.setAttribute("min", account_extent[0]);
   acr.setAttribute("max", account_extent[1]);
-  range_change(acr, aco, "account_count");
+  
   acr.value = range_data.account_count;
-  range_update(acr, aco, "account_count");
 
   const asr = document.querySelector("#account_spend_range");
   const aso = document.querySelector("#account_spend_output");
   asr.setAttribute("min", spend_extent[0]);
-  asr.setAttribute("max", spend_extent[1]);
-  range_change(asr, aso, "account_spend");
+  asr.setAttribute("max", spend_extent[1]); 
   asr.value = range_data.account_spend;
+
+  range_change(tsr, tso, "team_salary");
+  range_change(tcr, tco, "team_size", acr );
+  range_change(acr, aco, "account_count");
+  range_change(asr, aso, "account_spend");
+
+  // init
+  range_update(tsr, tso, "team_salary");
+  range_update(acr, aco, "account_count");
+  range_update(tcr, tco, "team_size");
   range_update(asr, aso, "account_spend");
 
-
 });
-
-
-
-
-
 
