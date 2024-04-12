@@ -354,6 +354,7 @@ const update_chart = () => {
     .attr("font-family", "Leaguemono")
     .attr("text-anchor", "start")
     .text("SAVING PER MONTH")
+    .attr("x", marginLeft)
     .attr("y", 24)
     .attr("style", `transform:rotate(4deg)`)
 
@@ -363,7 +364,8 @@ const update_chart = () => {
     .attr("font-size", 14)
     .attr("font-family", "Leaguemono")
     .attr("text-anchor", "center")
-    .attr("y", width/2)
+    .attr("y", 16)
+    .attr("x", width/2)
 
 
   const position = (x, d) => {
@@ -381,7 +383,7 @@ const update_chart = () => {
 
     savings_txt.text(d3.format("$.2s")(d.savings_per_month))
 
-    account_savings_movable.attr("style", `transform:translateY(${barScale(d.fluency_per_account) - 128}px)`);
+    account_savings_movable.attr("style", `transform:translateY(${barScale(d.fluency_per_account) - 32}px)`);
     acct_savings_txt.text(d3.format("$.2s")(d.savings_per_account))
     account_count_txt.text(`${d.future_accounts} ACCOUNTS (${d.growth}x GROWTH)`)
     clipper.attr("width", x - marginLeft + 8);
