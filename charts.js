@@ -170,23 +170,45 @@ const update_chart = () => {
     .attr("fill", "#FFF")
     .attr("font-size", 14)
     .attr("font-family", "Leaguemono")
-    .attr("x", -65)
+    .attr("x", 0)
     .attr("text-anchor", "middle")
     .attr("y", 36)
     .text("GROWTH")
 
+    movables
+    .append("text")
+    .attr("fill", "#FFF")
+    .attr("font-size", 14)
+    .attr("font-family", "Leaguemono")
+    .attr("x", 24)
+    .attr("text-anchor", "start")
+    .attr("y", 36)
+    .text(">")
+
+    movables
+    .append("text")
+    .attr("fill", "#FFF")
+    .attr("font-size", 14)
+    .attr("font-family", "Leaguemono")
+    .attr("x", -24)
+    .attr("text-anchor", "end")
+    .attr("y", 36)
+    .text("<")
+
   lines
     .append("path")
     .attr("fill", "none")
-    .attr("stroke", get_color("--violet"))
-    .attr("stroke-width", 4)
+    .attr("stroke-linecap", "round")
+    .attr("stroke", get_color("--midnight"))
+    .attr("stroke-width", 8)
     .attr("d", fluency_line(chart_data));
 
   lines
     .append("path")
     .attr("fill", "none")
-    .attr("stroke", get_color("--pale-sun"))
-    .attr("stroke-width", 4)
+    .attr("stroke", get_color("--midnight"))
+    .attr("stroke-linecap", "round")
+    .attr("stroke-width", 8)
     .attr("d", future_line(chart_data));
 
   // area mask
@@ -243,7 +265,6 @@ const update_chart = () => {
     .text("SAVING PER MONTH")
     .attr("x", width - marginRight - 16)
 
-
   // labels
   // const line_labels = line_chart
   //   .append('g')
@@ -289,14 +310,14 @@ const update_chart = () => {
 
   const flue_bar = bars
     .append("rect")
-    .attr('x', width - marginRight - 48 - 48 - 16 - 16)
-    .attr('width', 48)
+    .attr('x', width - marginRight - 64 - 64 - 24 - 24)
+    .attr('width', 64)
     .style('fill', "url(#flue_bar_gradient)")
 
   const future_bar = bars
     .append("rect")
-    .attr('x', width - marginRight - 48 - 16)
-    .attr('width', 48)
+    .attr('x', width - marginRight - 64 - 24)
+    .attr('width', 64)
     .style('fill', "url(#future_bar_gradient)");
 
   const acct_savings_txt = bar_chart
@@ -319,10 +340,10 @@ const update_chart = () => {
 
     growth_txt.text(`${d.growth}x`);
 
-    savings_movable.attr('y', 50 + y(d.future_monthly))
+    savings_movable.attr("style", `transform:translateY(${50 + y(d.future_monthly)}px)`);
+  
+
     savings_txt.text(d3.format("$.2s")(d.savings_per_month))
-
-
 
     acct_savings_txt.text(d3.format("$.2s")(d.savings_per_account))
 
