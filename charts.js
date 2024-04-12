@@ -72,7 +72,7 @@ const update_chart = () => {
   );
 
   const y = d3.scaleLinear(
-    [100000, d3.max(chart_data, (d) => d.future_monthly)],
+    [0, d3.max(chart_data, (d) => d.future_monthly)],
     [height - marginBottom, marginTop]
   );
 
@@ -175,24 +175,24 @@ const update_chart = () => {
     .attr("y", 36)
     .text("GROWTH")
 
-    movables
+  movables
     .append("text")
     .attr("fill", "#FFF")
     .attr("font-size", 14)
     .attr("font-family", "Leaguemono")
-    .attr("x", 24)
+    .attr("x", 30)
     .attr("text-anchor", "start")
-    .attr("y", 36)
+    .attr("y", 32)
     .text(">")
 
-    movables
+  movables
     .append("text")
     .attr("fill", "#FFF")
     .attr("font-size", 14)
     .attr("font-family", "Leaguemono")
-    .attr("x", -24)
+    .attr("x", -30)
     .attr("text-anchor", "end")
-    .attr("y", 36)
+    .attr("y", 32)
     .text("<")
 
   lines
@@ -227,8 +227,25 @@ const update_chart = () => {
     .attr("id", "area_fill")
     .attr("d", area(chart_data));
 
-  // savings
+  lines
+    .append("path")
+    .attr("fill", "none")
+    .attr("stroke-linecap", "round")
+    .attr("stroke", get_color("--violet"))
+    .attr("stroke-width", 8)
+    .attr("clip-path", "url(#mask)")
+    .attr("d", fluency_line(chart_data));
 
+  lines
+    .append("path")
+    .attr("fill", "none")
+    .attr("stroke", get_color("--pale-sun"))
+    .attr("stroke-linecap", "round")
+    .attr("stroke-width", 8)
+    .attr("clip-path", "url(#mask)")
+    .attr("d", future_line(chart_data));
+
+  // savings
   const fluency_circle =
     line_chart
       .append('circle')
@@ -244,17 +261,16 @@ const update_chart = () => {
   const savings_movable = line_chart
     .append("g")
     .attr("id", "savings_movable")
-    .attr("style", `transform:rotate(-8deg)`)
+    
 
   const savings_txt = savings_movable
     .append("text")
-    .attr("stroke", "var(--violet)")
-    .attr("stroke-weight", "2")
-    .attr("fill", "#000")
+    .attr("fill", "#fff")
     .attr("font-size", 36)
     .attr("font-weight", "bold")
     .attr("x", width - marginRight - 16)
     .attr("text-anchor", "end")
+    .attr("style", `transform:rotate(-8deg)`)
 
   savings_movable
     .append("text")
@@ -264,13 +280,8 @@ const update_chart = () => {
     .attr("text-anchor", "end")
     .text("SAVING PER MONTH")
     .attr("x", width - marginRight - 16)
-
-  // labels
-  // const line_labels = line_chart
-  //   .append('g')
-  //   .attr("id", "monthly_labels")
-  //   .attr("style", `transform:translate(${marginLeft}px, ${height-marginBottom + 16}px)`);
-
+    .attr("y", 24)
+    .attr("style", `transform:rotate(-8deg)`)
 
   /////////////////
   /// bar chart ///
@@ -320,16 +331,42 @@ const update_chart = () => {
     .attr('width', 64)
     .style('fill', "url(#future_bar_gradient)");
 
-  const acct_savings_txt = bar_chart
+  const account_savings_movable = bar_chart
+    .append("g")
+    .attr("id", "account_savings_movable")
+
+
+  const acct_savings_txt = account_savings_movable
     .append("text")
     .attr("fill", "#FFFFFF")
     .attr("font-size", 36)
     .attr("font-weight", "bold")
-    .attr("x", 24)
-    .attr("y", 150)
-    .attr("style", `transform:rotate(-3deg)`);
+    .attr("text-anchor", "start")
+    .attr("x", marginLeft)
+    .attr("style", `transform:rotate(4deg)`);
 
-  const position = (x, d, l) => {
+  savings_movable
+    .append("text")
+    .attr("fill", "#FFF")
+    .attr("font-size", 14)
+    .attr("font-family", "Leaguemono")
+    .attr("text-anchor", "end")
+    .text("SAVING PER MONTH")
+    .attr("x", marginLeft)
+    .attr("y", 24)
+    .attr("style", `transform:rotate(4deg)`)
+
+  bar_chart
+    .append("text")
+    .attr("fill", "#FFF")
+    .attr("font-size", 14)
+    .attr("font-family", "Leaguemono")
+    .attr("text-anchor", "end")
+    .text("ACCOUNTS")
+    .attr("x", marginLeft)
+    .attr("y", height-marginBottom)
+
+  const position = (x, d) => {
     movables.attr("style", `transform:translateX(${x}px)`);
     fluency_circle
       .attr('cx', x)
@@ -340,11 +377,11 @@ const update_chart = () => {
 
     growth_txt.text(`${d.growth}x`);
 
-    savings_movable.attr("style", `transform:translateY(${50 + y(d.future_monthly)}px)`);
-  
+    savings_movable.attr("style", `transform:translateY(${64 + y(d.future_monthly)}px)`);
 
     savings_txt.text(d3.format("$.2s")(d.savings_per_month))
 
+    account_savings_movable.attr("style", `transform:translateY(${64 + y(d.fluency_per_account)}px)`);
     acct_savings_txt.text(d3.format("$.2s")(d.savings_per_account))
 
     clipper.attr("width", x - marginLeft);
