@@ -119,7 +119,7 @@ const update_chart = () => {
   // y axis
   line_chart
     .append("g")
-    .attr("transform", `translate(${marginLeft - 24}, 0)`)
+    .attr("transform", `translate(${marginLeft + 24}px, 0)`)
     .call(d3.axisLeft(y).ticks(4).tickFormat(d3.format("$.2s")))
     .call((g) => g.select(".domain").remove())
     .call((g) =>
@@ -314,7 +314,7 @@ const update_chart = () => {
       g
         .selectAll(".tick line")
         .clone()
-        .attr("x1", -marginLeft)
+        .attr("x1", 0)
         .attr("x2", -width)
         .attr("stroke-opacity", 0.2)
     );
@@ -381,7 +381,7 @@ const update_chart = () => {
 
     savings_movable
       .attr("style", `transform:translateY(${y(d.future_monthly)+16}px)`)
-      .attr("text-anchor", l ? "start" : "end");
+      .attr("text-anchor", l ? "end" : "start");
 
     savings_txt.text(d3.format("$.2s")(d.savings_per_month))
 
