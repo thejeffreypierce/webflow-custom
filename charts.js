@@ -11,7 +11,7 @@ const team_extent = [10, 250];
 // chart const
 const width = 64 * 7;
 const height = 64 * 5;
-const marginTop = 96;
+const marginTop = 78;
 const marginRight = 64;
 const marginBottom = 16;
 const marginLeft = 64;
