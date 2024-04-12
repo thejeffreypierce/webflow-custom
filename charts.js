@@ -137,7 +137,6 @@ const update_chart = () => {
     .append("g")
     .attr("id", "moveables")
     .attr("style", "cursor: pointer;")
-    .attr()
 
   movables
     .attr("id", "growth_line")
