@@ -11,7 +11,7 @@ const team_extent = [10, 250];
 // chart const
 const width = 64 * 7;
 const height = 64 * 5;
-const marginTop = 78;
+const marginTop = 84;
 const marginRight = 64;
 const marginBottom = 16;
 const marginLeft = 64;
@@ -148,7 +148,7 @@ const update_chart = () => {
     .attr("opacity", 0.5)
     .attr("x1", 0)
     .attr("x2", 0)
-    .attr("y1", marginTop + 16)
+    .attr("y1", marginTop + 8)
     .attr("y2", height - marginBottom - 8)
 
   movables
