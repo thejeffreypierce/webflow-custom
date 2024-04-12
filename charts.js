@@ -16,7 +16,10 @@ const marginRight = 32;
 const marginBottom = 32;
 const marginLeft = 32;
 
-const rate_scale = d3.scaleSequentialPow().domain(spend_extent).range([0.025, 0.01]).exponent(2);
+let old_growth = 2.5;
+
+const get_color = (v) => getComputedStyle(document.documentElement).getPropertyValue(v);
+const rate_scale = d3.scaleSequentialPow().domain(spend_extent).range([0.025, 0.01]);
 const growth_stops = [...Array(31).keys()].map((n) => (n + 10) / 10).slice(5);  // 1.5 - 4 by .1 steps
 
 const update_chart = () => {
@@ -27,7 +30,7 @@ const update_chart = () => {
     let future_monthly = current_labor_cost * growth;
 
     let fluency_rate = rate_scale(range_data.account_spend); // between 1 - 2.5%
-    let fluency_cost = range_data.account_spend * 0.02//fluency_rate;
+    let fluency_cost = range_data.account_spend * fluency_rate;
 
     let fluency_per_account = current_labor_cost / future_accounts + fluency_cost;
 
@@ -58,7 +61,7 @@ const update_chart = () => {
     .attr("viewBox", [0, 0, width, height])
     .attr(
       "style",
-      "max-width: 100%; height: auto;"
+      "max-width: 100%; height: auto; cursor: pointer;"
     );
 
   const x = d3.scaleLinear(
@@ -91,7 +94,6 @@ const update_chart = () => {
     .x((d) => x(d.growth))
     .y0((d) => y(d.future_monthly))
     .y1((d) => y(d.fluency_monthly));
-
 
   line_chart
     .append("defs")
@@ -131,12 +133,12 @@ const update_chart = () => {
   // lines 
   const lines = line_chart
     .append("g")
+    .attr("id", "lines_group")
 
   // draggable growth
   const movables = line_chart
     .append("g")
     .attr("id", "moveables")
-    .attr("style", "cursor: pointer;")
 
   movables
     .attr("id", "growth_line")
@@ -148,7 +150,6 @@ const update_chart = () => {
     .attr("x2", 0)
     .attr("y1", marginTop + 16)
     .attr("y2", height - marginBottom - 8)
-
 
   movables
     .append("circle")
@@ -263,7 +264,7 @@ const update_chart = () => {
   const savings_movable = line_chart
     .append("g")
     .attr("id", "savings_movable")
-
+    .attr("text-anchor", "end")
 
   const savings_txt = savings_movable
     .append("text")
@@ -271,7 +272,6 @@ const update_chart = () => {
     .attr("font-size", 36)
     .attr("font-weight", "bold")
     .attr("x", width - marginRight - 16)
-    .attr("text-anchor", "end")
     .attr("style", `transform:rotate(-8deg)`)
 
   savings_movable
@@ -279,7 +279,7 @@ const update_chart = () => {
     .attr("fill", "#FFF")
     .attr("font-size", 14)
     .attr("font-family", "Leaguemono")
-    .attr("text-anchor", "end")
+    
     .text("SAVING PER MONTH")
     .attr("x", width - marginRight - 16)
     .attr("y", 24)
@@ -287,7 +287,8 @@ const update_chart = () => {
 
   /////////////////
   /// bar chart ///
-  ////////////////
+  /////////////////
+
   d3.select("#calc_chart_bar svg").remove();
   const bar_chart = d3
     .select('#calc_chart_bar')
@@ -298,6 +299,7 @@ const update_chart = () => {
       "style",
       "max-width: 100%; height: auto;"
     );
+
   const barScale = d3.scaleLinear(
     [0, d3.max(chart_data, d => d.future_per_account)],
     [height - marginBottom, marginTop]
@@ -337,8 +339,7 @@ const update_chart = () => {
     .append("g")
     .attr("id", "account_savings_movable")
 
-
-  const acct_savings_txt = account_savings_movable
+  const account_savings_txt = account_savings_movable
     .append("text")
     .attr("fill", "#FFFFFF")
     .attr("font-size", 36)
@@ -353,7 +354,7 @@ const update_chart = () => {
     .attr("font-size", 14)
     .attr("font-family", "Leaguemono")
     .attr("text-anchor", "start")
-    .text("SAVING PER MONTH")
+    .text("SAVING PER ACCOUNT")
     .attr("x", marginLeft)
     .attr("y", 24)
     .attr("style", `transform:rotate(4deg)`)
@@ -365,10 +366,9 @@ const update_chart = () => {
     .attr("font-family", "Leaguemono")
     .attr("text-anchor", "middle")
     .attr("y", 16)
-    .attr("x", width/2)
+    .attr("x", width / 2)
 
-
-  const position = (x, d) => {
+  const position = (x, d, l) => {
     movables.attr("style", `transform:translateX(${x}px)`);
     fluency_circle
       .attr('cx', x)
@@ -379,12 +379,13 @@ const update_chart = () => {
 
     growth_txt.text(`${d.growth}x`);
 
-    savings_movable.attr("style", `transform:translateY(${64 + y(d.future_monthly)}px)`);
+    savings_movable
+      .attr("style", `transform:translate(${width / 2}, ${32 + y(d.future_monthly)}px)`);
 
     savings_txt.text(d3.format("$.2s")(d.savings_per_month))
 
     account_savings_movable.attr("style", `transform:translateY(${barScale(d.fluency_per_account) - 32}px)`);
-    acct_savings_txt.text(d3.format("$.2s")(d.savings_per_account))
+    account_savings_txt.text(d3.format("$.2s")(d.savings_per_account))
     account_count_txt.text(`${d.future_accounts} ACCOUNTS (${d.growth}x GROWTH)`)
     clipper.attr("width", x - marginLeft + 8);
 
@@ -522,8 +523,7 @@ window.addEventListener('load', (e) => {
 });
 
 
-const get_color = (v) => getComputedStyle(document.documentElement).getPropertyValue(v);
-let old_growth = 2.5;
+
 
 
 
