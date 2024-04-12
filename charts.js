@@ -463,6 +463,7 @@ const range_update = (r, o, i, a = false) => {
   r.style.setProperty("--stop-3", `${progress}%`);
 
   if(a) {
+    console.log("loox maxxin")
     a.setAttribute("max", val * 3);
   }
 
@@ -470,16 +471,16 @@ const range_update = (r, o, i, a = false) => {
 }
 
 // browsers can be weird
-const range_change = (r, o, i, ) => {
+const range_change = (r, o, i, a = false) => {
   let n, c, m;
   r.addEventListener("input", (e) => {
     n = 1;
     c = e.target.value;
-    if (c != m) range_update(r, o, i)
+    if (c != m) range_update(r, o, i, a)
     m = c;
   });
   r.addEventListener("change", (e) => {
-    if (!n) range_update(r, o, i)
+    if (!n) range_update(r, o, i, a)
   });
 }
 // move them sliders
