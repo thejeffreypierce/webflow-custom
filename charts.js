@@ -11,7 +11,7 @@ const team_extent = [10, 250];
 // chart const
 const width = 64 * 7;
 const height = 64 * 5;
-const marginTop = 64;
+const marginTop = 96;
 const marginRight = 32;
 const marginBottom = 32;
 const marginLeft = 32;
@@ -119,7 +119,7 @@ const update_chart = () => {
   // y axis
   line_chart
     .append("g")
-    .attr("transform", `translate(${marginLeft - 8}, 0)`)
+    .attr("transform", `translate(${marginLeft - 24}, 0)`)
     .call(d3.axisLeft(y).ticks(4).tickFormat(d3.format("$.2s")))
     .call((g) => g.select(".domain").remove())
     .call((g) =>
@@ -271,7 +271,7 @@ const update_chart = () => {
     .attr("fill", "#fff")
     .attr("font-size", 36)
     .attr("font-weight", "bold")
-    .attr("x", width - marginRight - 16)
+    .attr("x", width /2)
     .attr("style", `transform:rotate(-8deg)`)
 
   savings_movable
@@ -281,7 +281,7 @@ const update_chart = () => {
     .attr("font-family", "Leaguemono")
 
     .text("SAVING PER MONTH")
-    .attr("x", width - marginRight - 16)
+    .attr("x", width /2)
     .attr("y", 24)
     .attr("style", `transform:rotate(-8deg)`)
 
@@ -315,7 +315,7 @@ const update_chart = () => {
         .selectAll(".tick line")
         .clone()
         .attr("x1", -marginLeft)
-        .attr("x2", -width - marginRight)
+        .attr("x2", -width)
         .attr("stroke-opacity", 0.2)
     );
 
@@ -346,7 +346,7 @@ const update_chart = () => {
     .attr("font-weight", "bold")
     .attr("text-anchor", "start")
     .attr("x", marginLeft)
-    .attr("style", `transform:rotate(4deg)`);
+    .attr("style", `transform:rotate(-8deg)`);
 
   account_savings_movable
     .append("text")
@@ -357,7 +357,7 @@ const update_chart = () => {
     .text("SAVING PER ACCOUNT")
     .attr("x", marginLeft)
     .attr("y", 24)
-    .attr("style", `transform:rotate(4deg)`)
+    .attr("style", `transform:rotate(-8deg)`)
 
   const account_count_txt = bar_chart
     .append("text")
@@ -380,7 +380,7 @@ const update_chart = () => {
     growth_txt.text(`${d.growth}x`);
 
     savings_movable
-      .attr("style", `transform:translate(${width / 2}px, ${32 + y(d.future_monthly)}px)`)
+      .attr("style", `transform:translateY(${y(d.future_monthly)+16}px)`)
       .attr("text-anchor", l ? "start" : "end");
 
     savings_txt.text(d3.format("$.2s")(d.savings_per_month))
