@@ -14,7 +14,7 @@ const height = 64 * 5;
 const marginTop = 64;
 const marginRight = 32;
 const marginBottom = 32;
-const marginLeft = 64;
+const marginLeft = 32;
 
 const rate_scale = d3.scaleSequentialPow().domain(spend_extent).range([0.025, 0.01]).exponent(2);
 const growth_stops = [...Array(31).keys()].map((n) => (n + 10) / 10).slice(5);  // 1.5 - 4 by .1 steps
@@ -137,6 +137,7 @@ const update_chart = () => {
     .append("g")
     .attr("id", "moveables")
     .attr("style", "cursor: pointer;")
+    .attr()
 
   movables
     .attr("id", "growth_line")
@@ -148,7 +149,7 @@ const update_chart = () => {
     .attr("x2", 0)
     .attr("y1", marginTop + 16)
     .attr("y2", height - marginBottom - 8)
-    
+
 
   movables
     .append("circle")
@@ -184,7 +185,7 @@ const update_chart = () => {
     .attr("font-family", "Leaguemono")
     .attr("x", 30)
     .attr("text-anchor", "start")
-    .attr("y", 32)
+    .attr("y", 34)
     .text(">")
 
   movables
@@ -194,7 +195,7 @@ const update_chart = () => {
     .attr("font-family", "Leaguemono")
     .attr("x", -30)
     .attr("text-anchor", "end")
-    .attr("y", 32)
+    .attr("y", 34)
     .text("<")
 
   lines
@@ -218,7 +219,7 @@ const update_chart = () => {
     .append("clipPath")
     .attr("id", "mask")
     .append("rect")
-    .attr("x", marginLeft-6)
+    .attr("x", marginLeft - 6)
     .attr("y", marginTop)
     .attr("height", height - marginBottom);
 
@@ -354,7 +355,6 @@ const update_chart = () => {
     .attr("font-family", "Leaguemono")
     .attr("text-anchor", "start")
     .text("SAVING PER MONTH")
-    .attr("x", marginLeft)
     .attr("y", 24)
     .attr("style", `transform:rotate(4deg)`)
 
@@ -364,9 +364,8 @@ const update_chart = () => {
     .attr("font-size", 14)
     .attr("font-family", "Leaguemono")
     .attr("text-anchor", "start")
-    .text("ACCOUNTS AT 2.5x GROWTH")
-    .attr("x", marginLeft)
-    .attr("y", 8)
+    .text("ACCOUNTS (2.5x GROWTH)")
+    .attr("y", 14)
 
   const account_count_txt = bar_chart
     .append("text")
@@ -388,10 +387,10 @@ const update_chart = () => {
 
     savings_txt.text(d3.format("$.2s")(d.savings_per_month))
 
-    account_savings_movable.attr("style", `transform:translateY(${64 + barScale(d.fluency_per_account)}px)`);
+    account_savings_movable.attr("style", `transform:translateY(${128 + barScale(d.fluency_per_account)}px)`);
     acct_savings_txt.text(d3.format("$.2s")(d.savings_per_account))
 
-    clipper.attr("width", x - marginLeft);
+    clipper.attr("width", x - marginLeft + 8);
 
     flue_bar
       .attr('y', barScale(d.fluency_per_account))
@@ -414,8 +413,8 @@ const update_chart = () => {
   const current_data = chart_data.find(d => old_growth == d.growth);
   position(X, current_data, isCursorOnRight);
 
-  line_chart.on("mousedown", (e) => {
-    line_chart.on("mousemove", (e) => {
+  line_chart.on("pointerdown", (e) => {
+    line_chart.on("pointermove", (e) => {
       let parent = document.querySelector('#calc_chart');
       let parent_width = parent.offsetWidth;
       let bounds = parent.getBoundingClientRect();
@@ -429,8 +428,8 @@ const update_chart = () => {
         old_growth = current_growth;
       }
     })
-    document.addEventListener("mouseup", (e) => {
-      line_chart.on('mousemove', null);
+    document.addEventListener("pointerup", (e) => {
+      line_chart.on('pointermove', null);
     })
   });
 };
@@ -485,6 +484,12 @@ const range_change = (r, o, i) => {
 }
 // move them sliders
 window.addEventListener('load', (e) => {
+  // label dom elements
+  future_asl = document.querySelector("#future_account_spend_label");
+  fluency_asl = document.querySelector("#fluency_account_spend_label");
+  future_sl = document.querySelector("#future_spend_label");
+  fluency_sl = document.querySelector("#fluency_spend_label");
+
   const tcr = document.querySelector("#team_size_range");
   const tco = document.querySelector("#team_size_output");
   tcr.setAttribute("min", team_extent[0]);
@@ -517,11 +522,7 @@ window.addEventListener('load', (e) => {
   asr.value = range_data.account_spend;
   range_update(asr, aso, "account_spend");
 
-  // label dom elements
-  future_asl = document.querySelector("#future_account_spend_label");
-  fluency_asl = document.querySelector("#fluency_account_spend_label");
-  future_sl = document.querySelector("#future_spend_label");
-  fluency_sl = document.querySelector("#fluency_spend_label");
+
 });
 
 
