@@ -463,7 +463,7 @@ const range_update = (r, o, i, a = false) => {
   r.style.setProperty("--stop-3", `${progress}%`);
 
   if (a) {
-    a.setAttribute("max", val * 3);
+    a.setAttribute("max", val * 30);
     const aco = document.querySelector("#account_count_output");
     range_update(a, aco, "account_count")
 
