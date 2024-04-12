@@ -11,7 +11,7 @@ const team_extent = [10, 250];
 // chart const
 const width = 64 * 7;
 const height = 64 * 5;
-const marginTop = 84;
+const marginTop = 88;
 const marginRight = 64;
 const marginBottom = 16;
 const marginLeft = 64;
@@ -276,10 +276,9 @@ const update_chart = () => {
 
   savings_movable
     .append("text")
-    .attr("fill", "#FFF")
+    .attr("fill", "var(--violet)")
     .attr("font-size", 14)
     .attr("font-family", "Leaguemono")
-
     .text("SAVING PER MONTH")
     .attr("x", width / 2)
     .attr("y", 24)
@@ -350,7 +349,7 @@ const update_chart = () => {
 
   account_savings_movable
     .append("text")
-    .attr("fill", "#FFF")
+    .attr("fill", "var(--violet)")
     .attr("font-size", 14)
     .attr("font-family", "Leaguemono")
     .attr("text-anchor", "start")
