@@ -271,7 +271,7 @@ const update_chart = () => {
     .attr("fill", "#fff")
     .attr("font-size", 36)
     .attr("font-weight", "bold")
-    .attr("x", width /2)
+    .attr("x", width / 2)
     .attr("style", `transform:rotate(-8deg)`)
 
   savings_movable
@@ -281,7 +281,7 @@ const update_chart = () => {
     .attr("font-family", "Leaguemono")
 
     .text("SAVING PER MONTH")
-    .attr("x", width /2)
+    .attr("x", width / 2)
     .attr("y", 24)
     .attr("style", `transform:rotate(-8deg)`)
 
@@ -380,7 +380,7 @@ const update_chart = () => {
     growth_txt.text(`${d.growth}x`);
 
     savings_movable
-      .attr("style", `transform:translateY(${y(d.future_monthly)+16}px)`)
+      .attr("style", `transform:translateY(${y(d.future_monthly) + 16}px)`)
       .attr("text-anchor", l ? "end" : "start");
 
     savings_txt.text(d3.format("$.2s")(d.savings_per_month))
@@ -462,9 +462,11 @@ const range_update = (r, o, i, a = false) => {
   r.style.setProperty("--stop-2", `${progress * 0.895}%`);
   r.style.setProperty("--stop-3", `${progress}%`);
 
-  if(a) {
-    console.log("loox maxxin")
+  if (a) {
     a.setAttribute("max", val * 3);
+    const aco = document.querySelector("#account_count_output");
+    range_update(a, aco, "account_count")
+
   }
 
   update_chart();
@@ -497,29 +499,29 @@ window.addEventListener('load', (e) => {
   tcr.setAttribute("max", team_extent[1]);
 
   tcr.value = range_data.team_size;
-  
+
   const tsr = document.querySelector("#team_salary_range");
   const tso = document.querySelector("#team_salary_output");
   tsr.setAttribute("min", salary_extent[0]);
   tsr.setAttribute("max", salary_extent[1]);
-  
+
   tsr.value = range_data.team_salary;
-  
+
   const acr = document.querySelector("#account_count_range");
   const aco = document.querySelector("#account_count_output");
   acr.setAttribute("min", account_extent[0]);
   acr.setAttribute("max", account_extent[1]);
-  
+
   acr.value = range_data.account_count;
 
   const asr = document.querySelector("#account_spend_range");
   const aso = document.querySelector("#account_spend_output");
   asr.setAttribute("min", spend_extent[0]);
-  asr.setAttribute("max", spend_extent[1]); 
+  asr.setAttribute("max", spend_extent[1]);
   asr.value = range_data.account_spend;
 
   range_change(tsr, tso, "team_salary");
-  range_change(tcr, tco, "team_size", acr );
+  range_change(tcr, tco, "team_size", acr);
   range_change(acr, aco, "account_count");
   range_change(asr, aso, "account_spend");
 
