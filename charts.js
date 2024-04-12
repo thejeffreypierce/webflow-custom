@@ -12,9 +12,9 @@ const team_extent = [10, 250];
 const width = 64 * 7;
 const height = 64 * 5;
 const marginTop = 96;
-const marginRight = 32;
-const marginBottom = 32;
-const marginLeft = 32;
+const marginRight = 64;
+const marginBottom = 16;
+const marginLeft = 64;
 
 let old_growth = 2.5;
 
@@ -119,7 +119,7 @@ const update_chart = () => {
   // y axis
   line_chart
     .append("g")
-    .attr("transform", `translate(${marginLeft + 24}px, 0)`)
+    .attr("transform", `translate(48, 0)`)
     .call(d3.axisLeft(y).ticks(4).tickFormat(d3.format("$.2s")))
     .call((g) => g.select(".domain").remove())
     .call((g) =>
