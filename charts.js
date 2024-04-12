@@ -279,7 +279,7 @@ const update_chart = () => {
     .attr("fill", "#FFF")
     .attr("font-size", 14)
     .attr("font-family", "Leaguemono")
-    
+
     .text("SAVING PER MONTH")
     .attr("x", width - marginRight - 16)
     .attr("y", 24)
@@ -380,7 +380,8 @@ const update_chart = () => {
     growth_txt.text(`${d.growth}x`);
 
     savings_movable
-      .attr("style", `transform:translate(${width / 2}, ${32 + y(d.future_monthly)}px)`);
+      .attr("style", `transform:translate(${width / 2}px, ${32 + y(d.future_monthly)}px)`)
+      .attr("text-anchor", l ? "start" : "end");
 
     savings_txt.text(d3.format("$.2s")(d.savings_per_month))
 
