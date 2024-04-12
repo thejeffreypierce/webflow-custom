@@ -136,6 +136,7 @@ const update_chart = () => {
   const movables = line_chart
     .append("g")
     .attr("id", "moveables")
+    .attr("style", "cursor: pointer;")
 
   movables
     .attr("id", "growth_line")
@@ -145,8 +146,9 @@ const update_chart = () => {
     .attr("opacity", 0.5)
     .attr("x1", 0)
     .attr("x2", 0)
-    .attr("y1", marginTop)
+    .attr("y1", marginTop + 16)
     .attr("y2", height - marginBottom - 8)
+    
 
   movables
     .append("circle")
@@ -172,7 +174,7 @@ const update_chart = () => {
     .attr("font-family", "Leaguemono")
     .attr("x", 0)
     .attr("text-anchor", "middle")
-    .attr("y", 36)
+    .attr("y", 36 + 36 + 8)
     .text("GROWTH")
 
   movables
@@ -216,7 +218,7 @@ const update_chart = () => {
     .append("clipPath")
     .attr("id", "mask")
     .append("rect")
-    .attr("x", marginLeft)
+    .attr("x", marginLeft-6)
     .attr("y", marginTop)
     .attr("height", height - marginBottom);
 
@@ -261,7 +263,7 @@ const update_chart = () => {
   const savings_movable = line_chart
     .append("g")
     .attr("id", "savings_movable")
-    
+
 
   const savings_txt = savings_movable
     .append("text")
@@ -321,13 +323,13 @@ const update_chart = () => {
 
   const flue_bar = bars
     .append("rect")
-    .attr('x', width - marginRight - 64 - 64 - 24 - 24)
+    .attr('x', width - marginRight - 64 - 64 - 34 - 34)
     .attr('width', 64)
     .style('fill', "url(#flue_bar_gradient)")
 
   const future_bar = bars
     .append("rect")
-    .attr('x', width - marginRight - 64 - 24)
+    .attr('x', width - marginRight - 64 - 36)
     .attr('width', 64)
     .style('fill', "url(#future_bar_gradient)");
 
@@ -345,12 +347,12 @@ const update_chart = () => {
     .attr("x", marginLeft)
     .attr("style", `transform:rotate(4deg)`);
 
-  savings_movable
+  account_savings_movable
     .append("text")
     .attr("fill", "#FFF")
     .attr("font-size", 14)
     .attr("font-family", "Leaguemono")
-    .attr("text-anchor", "end")
+    .attr("text-anchor", "start")
     .text("SAVING PER MONTH")
     .attr("x", marginLeft)
     .attr("y", 24)
@@ -361,10 +363,15 @@ const update_chart = () => {
     .attr("fill", "#FFF")
     .attr("font-size", 14)
     .attr("font-family", "Leaguemono")
-    .attr("text-anchor", "end")
-    .text("ACCOUNTS")
+    .attr("text-anchor", "start")
+    .text("ACCOUNTS AT 2.5x GROWTH")
     .attr("x", marginLeft)
-    .attr("y", height-marginBottom)
+    .attr("y", 8)
+
+  const account_count_txt = bar_chart
+    .append("text")
+    .attr("fill", "#FFF")
+    .attr("font-size", 20)
 
   const position = (x, d) => {
     movables.attr("style", `transform:translateX(${x}px)`);
@@ -381,7 +388,7 @@ const update_chart = () => {
 
     savings_txt.text(d3.format("$.2s")(d.savings_per_month))
 
-    account_savings_movable.attr("style", `transform:translateY(${64 + y(d.fluency_per_account)}px)`);
+    account_savings_movable.attr("style", `transform:translateY(${64 + barScale(d.fluency_per_account)}px)`);
     acct_savings_txt.text(d3.format("$.2s")(d.savings_per_account))
 
     clipper.attr("width", x - marginLeft);
