@@ -363,7 +363,7 @@ const update_chart = () => {
     .attr("fill", "#FFF")
     .attr("font-size", 14)
     .attr("font-family", "Leaguemono")
-    .attr("text-anchor", "center")
+    .attr("text-anchor", "middle")
     .attr("y", 16)
     .attr("x", width/2)
 
