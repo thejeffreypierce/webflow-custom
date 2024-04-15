@@ -31,8 +31,9 @@ const update_chart = () => {
 
     let fluency_rate = rate_scale(range_data.account_spend); // between 1 - 2.5%
     let fluency_cost = range_data.account_spend * fluency_rate;
-
- 
+    let fluency_per_account = current_labor_cost / future_accounts + fluency_cost;
+    let future_per_account = future_monthly / future_accounts;
+    let savings_per_account = future_per_account - fluency_per_account;
     let savings_per_month = future_accounts * savings_per_account;
     let fluency_monthly = future_monthly - savings_per_month;
 
